@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "framer-motion": "^12.42.0",
+    "lucide-react": "^1.21.0",
+    "postcss": "^8.5.16",
+    "tailwindcss": "^4.3.2"
+  }
+}

@@ -1,0 +1,5 @@
+collections:
+  - name: movies
+    metadata:
+      description: Movie catalog embeddings for semantic search
+    embedding_dimensions: 1536

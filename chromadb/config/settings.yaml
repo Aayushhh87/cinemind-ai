@@ -1,0 +1,5 @@
+host: localhost
+port: 8001
+persist_directory: ./chromadb/data
+collection_name: movies
+embedding_dimensions: 1536
