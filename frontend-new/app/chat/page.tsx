@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createChat, sendChatMessage } from "@/lib/api";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { createChat, sendChatMessage } from "@/lib/api";
 
 type Message = {
   role: string;
@@ -10,13 +10,14 @@ type Message = {
 };
 
 export default function ChatPage() {
-  const [chatId, setChatId] = useState<string>("");
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Hi 👋 I'm CineMind AI. Ask me anything about movies.",
-    },
-  ]);
+  return (
+    <Suspense fallback={<div className="p-8 text-white">Loading...</div>}>
+      <ChatContent />
+    </Suspense>
+  );
+}
+
+function ChatContent() {
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
