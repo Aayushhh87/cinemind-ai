@@ -27,9 +27,10 @@ async def lifespan(_: FastAPI):
         # embedded = ensure_movie_embeddings(db)
         # indexed = sync_movies_to_chroma(db)
         logger.info("Startup complete")
-        
+
     except SQLAlchemyError:
         logger.exception("Database startup tasks failed — API will run in degraded mode")
+
     finally:
         db.close()
 
@@ -38,15 +39,25 @@ async def lifespan(_: FastAPI):
 
 def create_app() -> FastAPI:
     settings = get_settings()
-    app = FastAPI(title=settings.app_name, lifespan=lifespan)
+
+    app = FastAPI(
+        title=settings.app_name,
+        lifespan=lifespan,
+    )
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origin_list,
+        allow_origins=[
+            "http://localhost:3000",
+            "https://cinemind-ai-ten.vercel.app",
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
     app.include_router(api_router)
+
     return app
 
 
