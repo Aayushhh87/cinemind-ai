@@ -11,17 +11,16 @@ from app.core.logging import setup_logging
 from app.db.init_db import ensure_demo_user
 from app.db.session import SessionLocal
 from app.services.search_service import ensure_movie_embeddings, sync_movies_to_chroma
-from alembic import command
-from alembic.config import Config
 
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    alembic_cfg = Config("alembic.ini")
-    command.upgrade(alembic_cfg, "head")
-    
+    setup_logging()
+    settings = get_settings()
+    logger.info("Starting %s (%s)", settings.app_name, settings.app_env)
+
     db = SessionLocal()
     try:
         ensure_demo_user(db)
