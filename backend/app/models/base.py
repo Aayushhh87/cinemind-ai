@@ -3,7 +3,7 @@ from app.db.base_class import Base
 import uuid
 from datetime import date, datetime
 
-from pgvector.sqlalchemy import Vector
+# from pgvector.sqlalchemy import Vector
 from sqlalchemy import Boolean, CheckConstraint, Date, DateTime, ForeignKey, Integer, Numeric, String, Text, func
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -58,7 +58,7 @@ class Movie(Base):
     popularity: Mapped[float | None] = mapped_column(Numeric(10, 3), default=0)
     external_id: Mapped[str | None] = mapped_column(String(50))
     external_source: Mapped[str | None] = mapped_column(String(20))
-    embedding: Mapped[list[float] | None] = mapped_column(Vector(1536))
+    embedding: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
